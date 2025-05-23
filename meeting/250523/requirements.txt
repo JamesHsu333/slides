@@ -1,0 +1,12 @@
+scikit-image 
+matplotlib 
+scipy
+numpy
+imageio
+scikit-learn
+joblib
+pandas
+tqdm
+seaborn
+umap
+umap-learn

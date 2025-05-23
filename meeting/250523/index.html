@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MOS Annotator</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin: 0;
+      background: #f9f9f9;
+    }
+    canvas {
+      max-width: 90vw;
+      max-height: 70vh;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+    }
+    .controls {
+      margin-top: 15px;
+    }
+    button {
+      font-size: 18px;
+      margin: 5px;
+      padding: 10px 20px;
+    }
+    textarea {
+      width: 60%;
+      height: 60px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>MOS Image Annotator</h1>
+  <input type="file" id="fileInput" multiple accept="image/*"><br>
+
+  <canvas id="canvas"></canvas>
+
+  <div class="controls">
+    <div>
+      <button onclick="rateImage(1)">1</button>
+      <button onclick="rateImage(2)">2</button>
+      <button onclick="rateImage(3)">3</button>
+      <button onclick="rateImage(4)">4</button>
+      <button onclick="rateImage(5)">5</button>
+    </div>
+    <div>
+      <textarea id="commentBox" placeholder="Optional feedback..."></textarea>
+    </div>
+    <div>
+      <button onclick="prevImage()">⬅ Prev</button>
+      <button onclick="downloadScores()">💾 Download MOS Scores</button>
+    </div>
+    <p id="statusMessage" style="color: green; font-weight: bold;"></p>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const fileInput = document.getElementById('fileInput');
+    const commentBox = document.getElementById('commentBox');
+    const statusMessage = document.getElementById('statusMessage');
+    let files = [];
+    let index = 0;
+    let scores = {};
+
+    fileInput.addEventListener('change', () => {
+      files = Array.from(fileInput.files);
+      files.sort((a, b) => a.name.localeCompare(b.name));
+      index = 0;
+      scores = {};
+      showImage();
+      statusMessage.textContent = "";
+    });
+
+    function showImage() {
+      if (!files[index]) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        statusMessage.textContent = "✅ All images rated!";
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const img = new Image();
+        img.onload = function () {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          commentBox.value = scores[files[index].name]?.comment || '';
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(files[index]);
+    }
+
+    function rateImage(score) {
+      if (!files[index]) return;
+
+      const name = files[index].name;
+      const comment = commentBox.value;
+      scores[name] = { score, comment };
+
+      index++;
+      showImage();
+    }
+
+    function prevImage() {
+      if (index > 0) {
+        index--;
+        showImage();
+      }
+    }
+
+    function downloadScores() {
+      let text = "image_name,score,comment\n";
+      for (let name in scores) {
+        const { score, comment } = scores[name];
+        const sanitized = comment.replace(/\n/g, ' ').replace(/,/g, ';');
+        text += `${name},${score},"${sanitized}"\n`;
+      }
+
+      const blob = new Blob([text], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = "mos_scores.csv";
+      a.click();
+    }
+  </script>
+
+</body>
+</html>

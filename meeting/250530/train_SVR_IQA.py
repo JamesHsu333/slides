@@ -46,7 +46,7 @@ def evaluate_svr(X, y, log_short):
   grid = GridSearchCV(SVR(kernel='rbf'), param_grid, cv=8, n_jobs=4, verbose=0)
   scaler = preprocessing.MinMaxScaler().fit(X)
   X = scaler.transform(X)
-  print("🔍 Performing GridSearchCV for SVR...")
+  print("Performing GridSearchCV for SVR...")
   grid.fit(X, y)
   return grid.best_params_
 
@@ -57,24 +57,24 @@ def evaluate_linear_svr(X, y, log_short):
   grid = GridSearchCV(LinearSVR(random_state=1, max_iter=100), param_grid, n_jobs=4, cv=8, verbose=0)
   scaler = preprocessing.MinMaxScaler().fit(X)
   X = scaler.transform(X)
-  print("🔍 Performing GridSearchCV for LinearSVR...")
+  print("Performing GridSearchCV for LinearSVR...")
   grid.fit(X, y)
   return grid.best_params_
 
 def main(args):
-  print("📦 Loading features and metadata from:", args.feature_file)
+  print("Loading features and metadata from:", args.feature_file)
   mat = scipy.io.loadmat(args.feature_file)
   X_all = np.asarray(mat['feats_mat'], dtype=np.float32)
   raw_names = mat['image_names'].squeeze()
   mat_names = [n.strip().lower() for n in raw_names]
 
-  print("📄 Loading MOS scores from:", args.train_csv)
+  print("Loading MOS scores from:", args.train_csv)
   df = pandas.read_csv(args.train_csv)
   df['image_name'] = df['image_name'].str.strip()
   matched_rows = df[df['image_name'].isin(mat_names)]
 
   if matched_rows.empty:
-    raise ValueError("❌ No matching images between .mat file and CSV file.")
+    raise ValueError("No matching images between .mat file and CSV file.")
 
   X = []
   y = []
@@ -90,7 +90,7 @@ def main(args):
   t_start = time.time()
   best_params_svr = evaluate_svr(X, y, args.log_short)
   best_params_linear = evaluate_linear_svr(X, y, args.log_short)
-  print('✅ Total training time: {:.2f} sec'.format(time.time() - t_start))
+  print('Total training time: {:.2f} sec'.format(time.time() - t_start))
 
   os.makedirs(os.path.dirname(args.best_parameter), exist_ok=True)
   scipy.io.savemat(args.best_parameter + '_SVR.mat', {
@@ -99,7 +99,7 @@ def main(args):
   scipy.io.savemat(args.best_parameter + '_linearSVR.mat', {
     'best_parameters': np.asarray(best_params_linear, dtype=object)
   })
-  print(f"📁 Saved best parameters to {args.best_parameter}_*.mat")
+  print(f"Saved best parameters to {args.best_parameter}_*.mat")
 
 if __name__ == '__main__':
   args = arg_parser() 

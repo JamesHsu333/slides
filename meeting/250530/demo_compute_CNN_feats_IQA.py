@@ -15,7 +15,7 @@ def test_image(model, image_path):
     img = np.array(img)
 
     if img.shape[0] < 299 or img.shape[1] < 299:
-        print(f"⚠️ Image {image_path} is too small. Skipped.")
+        print(f"Image {image_path} is too small. Skipped.")
         return None
 
     h_patches = img.shape[0] // 299
@@ -53,16 +53,16 @@ if __name__ == "__main__":
     feats_list = []
     names_list = []
 
-    print("📦 Loading MOS values...")
+    print("Loading MOS values...")
     df = pd.read_csv(args.csv)
     df_dict = dict(zip(df['image_name'], df['score']))
     mos_list = []
 
-    print("🔍 Extracting features...")
+    print("Extracting features...")
     for path in tqdm(image_paths, desc="Processing"):
         basename = os.path.basename(path)
         if basename not in df_dict:
-            print(f"❗ Warning: {basename} not found in MOS CSV. Skipping.")
+            print(f"Warning: {basename} not found in MOS CSV. Skipping.")
             continue
         feats = test_image(model, path)
         if feats is not None:
@@ -76,4 +76,4 @@ if __name__ == "__main__":
         "image_names": np.array(names_list)
     })
 
-    print(f"✅ Features, MOS, and image names saved to {args.save_path}")
+    print(f"Features, MOS, and image names saved to {args.save_path}")

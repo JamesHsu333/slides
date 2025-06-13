@@ -1,0 +1,39 @@
+Namespace(feature_file='feat_files/cinnamoroll_feats.mat', best_parameter='best_param/cinnamoroll', log_file='logs/train.log', log_short=False, train_csv='/Users/jameshsu/Projects/video_quality_accessment/250523/mos_scores_train.csv')
+Loading features and metadata from: feat_files/cinnamoroll_feats.mat
+Loading MOS scores from: /Users/jameshsu/Projects/video_quality_accessment/250523/mos_scores_train.csv
+Training SVR with 1024-dim features
+Performing GridSearchCV for SVR...
+Training LinearSVR with 1024-dim features
+Performing GridSearchCV for LinearSVR...
+Training Ridge Regression with 1024-dim features
+Best alpha for Ridge: 1.0
+Total training time: 18.38 sec
+📁 Saved best parameters to best_param/cinnamoroll_*.mat
+Namespace(feature_file='feat_files/cinnamoroll_feats.mat', best_parameter='best_param/cinnamoroll', log_file='logs/train.log', log_short=False, train_csv='/Users/jameshsu/Projects/video_quality_accessment/250523/mos_scores_train.csv')
+Loading features and metadata from: feat_files/cinnamoroll_feats.mat
+Loading MOS scores from: /Users/jameshsu/Projects/video_quality_accessment/250523/mos_scores_train.csv
+Training SVR with 1024-dim features
+Performing GridSearchCV for SVR...
+Training LinearSVR with 1024-dim features
+Performing GridSearchCV for LinearSVR...
+Training Ridge Regression with 1024-dim features
+Best alpha for Ridge: 1.0
+Training Ridge Regression with 1024-dim features
+Best alpha for Lasso: 0.001
+Total training time: 25.57 sec
+Saved best parameters to best_param/cinnamoroll_*.mat
+Namespace(feature_file='feat_files/cinnamoroll_feats.mat', best_parameter='best_param/cinnamoroll', log_file='logs/train.log', log_short=False, train_csv='/Users/jameshsu/Projects/video_quality_accessment/250523/mos_scores_train.csv')
+Loading features and metadata from: feat_files/cinnamoroll_feats.mat
+Loading MOS scores from: /Users/jameshsu/Projects/video_quality_accessment/250523/mos_scores_train.csv
+Training SVR with 1024-dim features
+Performing GridSearchCV for SVR...
+Training LinearSVR with 1024-dim features
+Performing GridSearchCV for LinearSVR...
+Training Ridge Regression with 1024-dim features
+Best alpha for Ridge: 1.0
+Training Lasso Regression with 1024-dim features
+Best alpha for Lasso: 0.001
+Training Elastic Net Regression with 1024-dim features
+Best alpha for Elastic Net: 0.001
+Total training time: 33.07 sec
+Saved best parameters to best_param/cinnamoroll_*.mat

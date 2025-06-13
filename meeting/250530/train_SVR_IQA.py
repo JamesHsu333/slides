@@ -7,6 +7,7 @@ import os, sys
 from sklearn.impute import SimpleImputer
 from sklearn import preprocessing
 from sklearn.svm import SVR, LinearSVR
+from sklearn.linear_model import RidgeCV, LassoCV, ElasticNetCV
 from sklearn.model_selection import GridSearchCV
 import warnings
 from tqdm import tqdm
@@ -61,6 +62,36 @@ def evaluate_linear_svr(X, y, log_short):
   grid.fit(X, y)
   return grid.best_params_
 
+def evaluate_ridge(X, y, log_short):
+  print(f"Training Ridge Regression with {X.shape[1]}-dim features")
+  alphas = np.logspace(-5, 5, 11)
+  scaler = preprocessing.MinMaxScaler().fit(X)
+  X = scaler.transform(X)
+  ridge = RidgeCV(alphas=alphas, cv=8)
+  ridge.fit(X, y)
+  print(f"Best alpha for Ridge: {ridge.alpha_}")
+  return {'alpha': ridge.alpha_}
+
+def evaluate_lasso(X, y, log_short):
+  print(f"Training Lasso Regression with {X.shape[1]}-dim features")
+  alphas = np.logspace(-5, 5, 11)
+  scaler = preprocessing.MinMaxScaler().fit(X)
+  X = scaler.transform(X)
+  lasso = LassoCV(alphas=alphas, cv=8)
+  lasso.fit(X, y)
+  print(f"Best alpha for Lasso: {lasso.alpha_}")
+  return {'alpha': lasso.alpha_}
+
+def evaluate_elastic_net(X, y, log_short):
+  print(f"Training Elastic Net Regression with {X.shape[1]}-dim features")
+  alphas = np.logspace(-5, 5, 11)
+  scaler = preprocessing.MinMaxScaler().fit(X)
+  X = scaler.transform(X)
+  en = ElasticNetCV(alphas=alphas, cv=8)
+  en.fit(X, y)
+  print(f"Best alpha for Elastic Net: {en.alpha_}")
+  return {'alpha': en.alpha_}
+
 def main(args):
   print("Loading features and metadata from:", args.feature_file)
   mat = scipy.io.loadmat(args.feature_file)
@@ -90,6 +121,9 @@ def main(args):
   t_start = time.time()
   best_params_svr = evaluate_svr(X, y, args.log_short)
   best_params_linear = evaluate_linear_svr(X, y, args.log_short)
+  best_params_ridge = evaluate_ridge(X, y, args.log_short)
+  best_params_lasso = evaluate_lasso(X, y, args.log_short)
+  best_params_elastic_net = evaluate_elastic_net(X, y, args.log_short)
   print('Total training time: {:.2f} sec'.format(time.time() - t_start))
 
   os.makedirs(os.path.dirname(args.best_parameter), exist_ok=True)
@@ -98,6 +132,15 @@ def main(args):
   })
   scipy.io.savemat(args.best_parameter + '_linearSVR.mat', {
     'best_parameters': np.asarray(best_params_linear, dtype=object)
+  })
+  scipy.io.savemat(args.best_parameter + '_Ridge.mat', {
+    'best_parameters': np.asarray(best_params_ridge, dtype=object)
+  })
+  scipy.io.savemat(args.best_parameter + '_Lasso.mat', {
+    'best_parameters': np.asarray(best_params_lasso, dtype=object)
+  })
+  scipy.io.savemat(args.best_parameter + '_Elastic_Net.mat', {
+    'best_parameters': np.asarray(best_params_elastic_net, dtype=object)
   })
   print(f"Saved best parameters to {args.best_parameter}_*.mat")
 

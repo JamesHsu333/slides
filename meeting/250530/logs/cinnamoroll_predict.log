@@ -1,0 +1,16 @@
+Namespace(feature_file='feat_files/cinnamoroll_feats.mat', best_parameter='best_param/cinnamoroll', predicted_score='predicted_score/cinnamoroll_GAMIVAL_predicted_score', log_file='logs/cinnamoroll_predict.log', log_short=False, test_csv='/Users/jameshsu/Projects/video_quality_accessment/250523/mos_scores_test.csv')
+SVR: [0.9027833953890544, 0.7807560684185781, 0.9296259099998714, 0.5511641921639338]
+LinearSVR: [0.5014648149009411, 0.3895689046648454, 0.52344821856019, 1.2744034402740463]
+Ridge: [0.8426785098272368, 0.6903493273193978, 0.8601160220488564, 0.762942929679579]
+Namespace(feature_file='feat_files/cinnamoroll_feats.mat', best_parameter='best_param/cinnamoroll', predicted_score='predicted_score/cinnamoroll_GAMIVAL_predicted_score', log_file='logs/cinnamoroll_predict.log', log_short=False, test_csv='/Users/jameshsu/Projects/video_quality_accessment/250523/mos_scores_test.csv')
+SVR: [0.9027833953890544, 0.7807560684185781, 0.9296259099998714, 0.5511641921639338]
+LinearSVR: [0.5019053993219554, 0.390000440421882, 0.52349811792316, 1.2743575879592255]
+Ridge: [0.8426785098272368, 0.6903493273193978, 0.8601160220488564, 0.762942929679579]
+Lasso: [0.940490244887088, 0.8290880732066842, 0.961139156489976, 0.4129033147184563]
+Namespace(feature_file='feat_files/cinnamoroll_feats.mat', best_parameter='best_param/cinnamoroll', predicted_score='predicted_score/cinnamoroll_GAMIVAL_predicted_score', log_file='logs/cinnamoroll_predict.log', log_short=False, test_csv='/Users/jameshsu/Projects/video_quality_accessment/250523/mos_scores_test.csv')
+Namespace(feature_file='feat_files/cinnamoroll_feats.mat', best_parameter='best_param/cinnamoroll', predicted_score='predicted_score/cinnamoroll_GAMIVAL_predicted_score', log_file='logs/cinnamoroll_predict.log', log_short=False, test_csv='/Users/jameshsu/Projects/video_quality_accessment/250523/mos_scores_test.csv')
+SVR: [0.9027833953890544, 0.7807560684185781, 0.9296259099998714, 0.5511641921639338]
+LinearSVR: [0.5017020526661027, 0.3897846725433637, 0.523488987000724, 1.2743659782946828]
+Ridge: [0.8426785098272368, 0.6903493273193978, 0.8601160220488564, 0.762942929679579]
+Lasso: [0.940490244887088, 0.8290880732066842, 0.961139156489976, 0.4129033147184563]
+Elastic Net: [0.9271810069020573, 0.8077270532333695, 0.9498354309986756, 0.46777342157224494]
